@@ -17,7 +17,7 @@ generar_ruta_eh_scldata <- function(anio = NA, pais = "GRAL") {
   harmonized_surveys = "Household Socio-Economic Surveys/Harmonized Household Surveys/"
 
   rutas <- metadata_encuesta %>%
-    mutate(path = paste0(scldatalake, harmonized_surveys,  isoalpha3, "/",name, "/data_arm/", archivo ))
+    dplyr::mutate(path = paste0(scldatalake, harmonized_surveys,  isoalpha3, "/",name, "/data_arm/", archivo ))
 
   if(is.na(anio) & pais == "GRAL") {
     lista_descarga <- rutas$path
@@ -25,21 +25,21 @@ generar_ruta_eh_scldata <- function(anio = NA, pais = "GRAL") {
 
   else if(!is.na(anio) & pais == "GRAL") {
     rutas_filtradas <- rutas %>%
-      filter(year == anio)
+      dplyr::filter(year == anio)
     lista_descarga <- rutas_filtradas$path
 
   }
 
   else if(is.na(anio) & pais != "GRAL") {
     rutas_filtradas <- rutas %>%
-      filter(isoalpha3 == pais)
+      dplyr::filter(isoalpha3 == pais)
     lista_descarga <- rutas_filtradas$path
 
   }
 
   else if(!is.na(anio) & pais != "GRAL"){
     rutas_filtradas <- rutas %>%
-      filter(year == anio & isoalpha3 == pais)
+      dplyr::filter(year == anio & isoalpha3 == pais)
     lista_descarga <- rutas_filtradas$path
   }
 

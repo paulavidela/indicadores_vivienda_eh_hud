@@ -10,26 +10,68 @@
 #'
 #' @return dataset con la cantidad de hogares
 #' @export
-#' @import magrittr
+#' @import magrittr dplyr stats
 #'
 estimar_representacion_deficit <- function(data, escala = "pais") {
 
+  encuesta <- data %>%
+    preprocesar_eh_bid()
+
+  muestra <- as.numeric(nrow(encuesta))
+
   if (escala == "pais") {
-    nuevo_dataset <- data %>%
-      preprocesar_eh_bid() %>%
-      dplyr::group_by(pais_c, deficit, anio_c) %>%
-      dplyr::summarise(cantidad = sum(factor_ch)) %>%
-      dplyr::ungroup()
+    nuevo_dataset <- encuesta %>%
+      dplyr::mutate(hud_deficit_cualitativo = ifelse(deficit == "Cualitativo", 1, 0),
+                    hud_deficit_cuantitativo = ifelse(deficit == "Cuantitativo", 1, 0),
+                    hud_sin_deficit = ifelse(deficit == "Sin déficit", 1, 0)) %>%
+      dplyr::select(pais_c, anio_c, factor_ch, hud_deficit_cualitativo, hud_deficit_cuantitativo, hud_sin_deficit) %>%
+      tidyr::gather(key = "indicator", value = "variable_binaria", 4:6) %>%
+      dplyr::group_by(pais_c, anio_c, indicator) %>%
+      dplyr::summarise(value = sum(variable_binaria*factor_ch)*100/sum(factor_ch),
+                       se = sqrt(stats::var(variable_binaria)),
+                       cv = se *100 /(sum(variable_binaria*factor_ch)*100/sum(factor_ch)),
+                       sample = muestra) %>%
+      ungroup() %>%
+      dplyr::left_join(metadata_encuesta, by = c("pais_c" = "isoalpha3", "anio_c" =  "year")) %>%
+      dplyr::mutate(year = anio_c,
+                    isoalpha3 = pais_c,
+                    idegeo = "country",
+                    source = paste0(isoalpha3,"-", name),
+                    area = "Total",
+                    quintile = "Total",
+                    sex =NA,
+                    education =NA,
+                    age=NA,
+                    ethnicity =NA) %>%
+      dplyr::select(iddate, year, idgeo, isoalpha3, source, indicator, area, quintile, sex, education, age, ethnicity, value, se,cv, sample)
 
   }
 
   else if (escala == "region"){
-    nuevo_dataset <- data %>%
-      preprocesar_eh_bid() %>%
-      dplyr::group_by(pais_c, region_c, deficit, anio_c) %>%
-      dplyr::summarise(cantidad = sum(factor_ch)) %>%
-      dplyr::ungroup()
-
+    nuevo_dataset <- encuesta %>%
+      dplyr::mutate(hud_deficit_cualitativo = ifelse(deficit == "Cualitativo", 1, 0),
+                    hud_deficit_cuantitativo = ifelse(deficit == "Cuantitativo", 1, 0),
+                    hud_sin_deficit = ifelse(deficit == "Sin déficit", 1, 0)) %>%
+      dplyr::select(pais_c, anio_c, region_c, factor_ch, hud_deficit_cualitativo, hud_deficit_cuantitativo, hud_sin_deficit) %>%
+      tidyr::gather(key = "indicator", value = "variable_binaria", 5:7) %>%
+      dplyr::group_by(pais_c, anio_c, region_c, indicator) %>%
+      dplyr::summarise(value = sum(variable_binaria*factor_ch)*100/sum(factor_ch),
+                       se = sqrt(stats::var(variable_binaria)),
+                       cv = se *100 /(sum(variable_binaria*factor_ch)*100/sum(factor_ch)),
+                       sample = muestra) %>%
+      ungroup() %>%
+      dplyr::left_join(metadata_encuesta, by = c("pais_c" = "isoalpha3", "anio_c" =  "year")) %>%
+      dplyr::mutate(year = anio_c,
+                    isoalpha3 = pais_c,
+                    idegeo = "country",
+                    source = paste0(isoalpha3,"-", name),
+                    area = region_c,
+                    quintile = "Total",
+                    sex =NA,
+                    education =NA,
+                    age=NA,
+                    ethnicity =NA) %>%
+      dplyr::select(iddate, year, idgeo, isoalpha3, source, indicator, area, quintile, sex, education, age, ethnicity, value, se,cv, sample)
   }
 
   else {
