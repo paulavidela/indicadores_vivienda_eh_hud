@@ -32,11 +32,11 @@ estimar_representacion_deficit <- function(data, escala = "pais") {
                        cv = se *100 /(sum(variable_binaria*factor_ch)*100/sum(factor_ch)),
                        sample = muestra) %>%
       ungroup() %>%
-      dplyr::left_join(metadata_encuesta, by = c("pais_c" = "isoalpha3", "anio_c" =  "year")) %>%
+      dplyr::left_join(data_s3, by = c("pais_c" = "pais", "anio_c" =  "anio")) %>%
       dplyr::mutate(year = anio_c,
                     isoalpha3 = pais_c,
                     idegeo = "country",
-                    source = paste0(isoalpha3,"-", name),
+                    source = paste0(isoalpha3,"-", nombre),
                     area = "Total",
                     quintile = "Total",
                     sex =NA,
@@ -60,11 +60,11 @@ estimar_representacion_deficit <- function(data, escala = "pais") {
                        cv = se *100 /(sum(variable_binaria*factor_ch)*100/sum(factor_ch)),
                        sample = muestra) %>%
       ungroup() %>%
-      dplyr::left_join(metadata_encuesta, by = c("pais_c" = "isoalpha3", "anio_c" =  "year")) %>%
+      dplyr::left_join(data_s3, by = c("pais_c" = "pais", "anio_c" =  "anio")) %>%
       dplyr::mutate(year = anio_c,
                     isoalpha3 = pais_c,
                     idegeo = "country",
-                    source = paste0(isoalpha3,"-", name),
+                    source = paste0(isoalpha3,"-", nombre),
                     area = region_c,
                     quintile = "Total",
                     sex =NA,
