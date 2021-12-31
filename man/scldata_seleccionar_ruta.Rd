@@ -7,11 +7,13 @@
 scldata_seleccionar_ruta(x, inicio = NA, final = inicio, isoalpha3 = "GRAL")
 }
 \arguments{
+\item{x}{define el dataset que contiene las rutas a las encuestas armonizadas}
+
 \item{inicio}{define el anio inicial, por defecto el valor es NA}
 
 \item{final}{define el anio final, por defecto es el mismo valor que inicio}
 
-\item{pais}{define el pais, por defecto es 'GRAL' es decir todos los paises}
+\item{isoalpha3}{define el pais, por defecto es 'GRAL' es decir todos los paises}
 }
 \value{
 lista con las rutas para descargar los dataset

@@ -3,9 +3,10 @@
 #' La funcion genera una lista con las rutas de scldata para descargar las encuestas armonizadas de hogares.
 #' Se puede configurar para un anio, un lapso de anios o un pais en particular
 #'
+#' @param  x define el dataset que contiene las rutas a las encuestas armonizadas
 #' @param inicio define el anio inicial, por defecto el valor es NA
 #' @param final define el anio final, por defecto es el mismo valor que inicio
-#' @param pais define el pais, por defecto es 'GRAL' es decir todos los paises
+#' @param isoalpha3 define el pais, por defecto es 'GRAL' es decir todos los paises
 #'
 #' @return lista con las rutas para descargar los dataset
 #' @export

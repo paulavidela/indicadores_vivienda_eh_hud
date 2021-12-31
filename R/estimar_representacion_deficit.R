@@ -4,13 +4,12 @@
 #' La estimacion se hace a partir del factor de expansion presente en las encuestas de hogares
 #'
 #' @param data dataset de encuesta de hogares armonizada
-#' @param escala nivel de analisis: "pais" o "region" .
-#' La region esta determinada por la Encuesta de Hogar del pais de analisis
-#'
+#' @param escala nivel de analisis: "pais" o "region" . La region esta determinada por la Encuesta de Hogar del pais de analisis
 #'
 #' @return dataset con la cantidad de hogares
-#' @export
-#' @import magrittr dplyr stats
+#'
+#' @import magrittr dplyr
+#' @importFrom stats var
 #'
 estimar_representacion_deficit <- function(data, escala = "pais") {
 
