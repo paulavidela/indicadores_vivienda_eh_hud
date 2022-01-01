@@ -37,12 +37,8 @@ estimar_representacion_deficit <- function(data, escala = "pais") {
                     idegeo = "country",
                     source = paste0(isoalpha3,"-", nombre),
                     area = "Total",
-                    quintile = "Total",
-                    sex =NA,
-                    education =NA,
-                    age=NA,
-                    ethnicity =NA) %>%
-      dplyr::select(iddate, year, idgeo, isoalpha3, source, indicator, area, quintile, sex, education, age, ethnicity, value, se,cv, sample)
+                    quintile = "Total") %>%
+      dplyr::select(iddate, year, idgeo, isoalpha3, source, indicator, area, quintile,  value, se,cv, sample)
 
   }
 
@@ -65,12 +61,8 @@ estimar_representacion_deficit <- function(data, escala = "pais") {
                     idegeo = "country",
                     source = paste0(isoalpha3,"-", nombre),
                     area = region_c,
-                    quintile = "Total",
-                    sex =NA,
-                    education =NA,
-                    age=NA,
-                    ethnicity =NA) %>%
-      dplyr::select(iddate, year, idgeo, isoalpha3, source, indicator, area, quintile, sex, education, age, ethnicity, value, se,cv, sample)
+                    quintile = "Total") %>%
+      dplyr::select(iddate, year, idgeo, isoalpha3, source, indicator, area, quintile, value, se,cv, sample)
   }
 
   else {
