@@ -39,20 +39,20 @@
 calcular_deficit_vivienda <- function(x) {
   nuevo_dataset <- x %>%
     dplyr::mutate(deficit = dplyr::case_when(
-      cm == 0  ~ "Cuantitativo",
-      ha == 2  ~ "Cuantitativo",
-      tv == 0 ~ "Cuantitativo",
-      db == 0 ~ "Cuantitativo",
+      cm == 0  ~ "hud_deficit_cuantitativo",
+      ha == 2  ~ "hud_deficit_cuantitativo",
+      tv == 0 ~ "hud_deficit_cuantitativo",
+      db == 0 ~ "hud_deficit_cuantitativo",
 
-      cm == 1  ~ "Cualitativo",
-      ag == 0 ~ "Cualitativo",
-      el == 0 ~ "Cualitativo",
-      cl == 0 ~ "Cualitativo",
-      ha == 1~ "Cualitativo",
+      cm == 1  ~ "hud_deficit_cualitativo",
+      ag == 0 ~ "hud_deficit_cualitativo",
+      el == 0 ~ "hud_deficit_cualitativo",
+      cl == 0 ~ "hud_deficit_cualitativo",
+      ha == 1~ "hud_deficit_cualitativo",
 
       is.na(cm) & is.na(ha) & is.na(tv) & is.na(db) & is.na(ag) & is.na(el) & is.na(cl) ~ "Sin datos",
 
-      TRUE ~ "Sin déficit"
+      TRUE ~ "hud_sin_deficit"
     )
 
     )

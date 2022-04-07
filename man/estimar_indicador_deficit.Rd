@@ -4,14 +4,14 @@
 \alias{estimar_indicador_deficit}
 \title{Calculo de Indicador de Deficit habitacional}
 \usage{
-estimar_indicador_deficit(path)
+estimar_indicador_deficit(x)
 }
 \arguments{
-\item{path}{ruta a la encuesta de hogares armonizada}
+\item{x}{ruta a la encuesta de hogares armonizada}
 }
 \value{
 dataset con el indicador para esa encuesta de hogares
 }
 \description{
-Calculo de Indicador de Deficit habitacional
+Esta función descarga los datos de Encuestas de hogares armonizadas y
 }

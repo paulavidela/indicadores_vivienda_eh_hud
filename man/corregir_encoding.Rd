@@ -16,6 +16,6 @@ vector con los caracteres especiales del castellano corregidos
 Permite corregir manualmente los caracteres especiales en las encuestas de hogares 'Harmonized Surveys'
 }
 \examples{
-corregir_encoding(c("AsunciÃƒÂ³n", "SaÃƒÂ£ Paulo", "TucumÃƒÂ¡n"))
+corregir_encoding(c("AsunciÃ³n", "SaÃ£ Paulo", "TucumÃ¡n"))
 
 }

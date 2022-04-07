@@ -2,7 +2,7 @@
 % Please edit documentation in R/seleccionar_variables.R
 \name{seleccionar_variables}
 \alias{seleccionar_variables}
-\title{Preprocesamiento de encuestas de hogares}
+\title{Preprocesamiento de las encuestas de hogares}
 \usage{
 seleccionar_variables(x)
 }

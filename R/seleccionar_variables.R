@@ -1,4 +1,4 @@
-#' Preprocesamiento de encuestas de hogares
+#' Preprocesamiento de las encuestas de hogares
 #'
 #' Verifica si el parametro x es una encuesta de hogares armonizada por SCLDATA, y devuelve las variables de vivienda
 #'
@@ -9,28 +9,32 @@
 #'
 seleccionar_variables <- function(x) {
 
-  # se seleccionan todas las variables que se encuentran en el dataset 'variables_a_seleccionar'
+  # se determinan las variables disponibles en el dataset
+
+  tipo <- determinar_variables_disponibles(x)
+
+  # se determina la lista de variables a seleccionar según el tipo
+  # las variables que se quitan son variables que se utilizan para las métricas de calidad
+
   nombre_variables_list <- variables_a_seleccionar$nombre
 
-  loadError <- FALSE
+  if(tipo == 3) {
+    nombre_variables_list <- variables_a_seleccionar$nombre
 
-  # se verifica si los nombres de las variables se encuentran en el dataset
-  z <- try({ x[ , nombre_variables_list, drop=FALSE] })
+  } else if(tipo == 2) {
+    nombre_variables_list <- nombre_variables_list[!(nombre_variables_list == "estrato_ci")]
 
-  loadError <- (methods::is(z, 'try-error')|is(z,'error'))
+  } else {
+    nombre_variables_list <- nombre_variables_list[!(nombre_variables_list %in% c("estrato_ci", "upm_ci"))]
+  }
 
-  # si el dataset es una encuesta armonizada, entonces se filtran solo las variables seleccionadas
-  if(loadError == FALSE){
+  # se seleccionan todas las variables que se encuentran en el dataset 'variables_a_seleccionar'
+
 
     dataframe <- x[ , nombre_variables_list, drop=FALSE]
     dataframe <- unique(dataframe) # mantener hogares con ID unico para no computar más de 1 vez el hogar
     dataframe <- dplyr::filter(dataframe, !is.na(factor_ch))
 
-  }
-
-  # su el dataset no es una encuesta armonizada (las variables no se encontraron), entonces devuelve un error
-  else {
-    stop('El dataset no corresponde a una encuesta armonizada (Harmonized Survey SCLDATA)') }
 
   return(dataframe)
 }

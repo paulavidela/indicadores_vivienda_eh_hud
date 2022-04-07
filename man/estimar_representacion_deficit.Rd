@@ -4,13 +4,10 @@
 \alias{estimar_representacion_deficit}
 \title{Estimacion de hogares segun estado habitacional}
 \usage{
-estimar_representacion_deficit(data, escala = "pais")
+estimar_representacion_deficit(data)
 }
 \arguments{
 \item{data}{dataset de encuesta de hogares armonizada}
-
-\item{escala}{nivel de analisis: "pais" o "region" .
-La region esta determinada por la Encuesta de Hogar del pais de analisis}
 }
 \value{
 dataset con la cantidad de hogares
